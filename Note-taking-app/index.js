@@ -28,17 +28,25 @@ app.get("/", function (req, res) {
 
 // step 7: creating a new route for opening a file in a different page
 app.get("/file/:filename", function (req, res) {
-
   // reading a new file in the files folder giving giving its name, utf-8 to change it to english language and a function to render it to the screen with filenaem and file data.
   fs.readFile(`./files/${req.params.filename}`,"utf-8",function (err, filedata) {
     res.render('show',{filename:req.params.filename, filedata:filedata});
   });
 });
 
+app.get("/edit/:filename", function (req, res) {
+    res.render('edit',{filename:req.params.filename});
+});
+
+app.post("/edit", function (req, res) {
+    fs.rename(`./files/${req.body.previous}`,`./files/${req.body.new}`,function(err){
+      res.redirect("/");
+    })
+});
+
 // step 8: creating a  new file in the files folder
 app.post("/create", function (req, res) {
   fs.writeFile(`./files/${req.body.title.split(' ').join('')}.txt`,req.body.details,function(err){
-
     // will redirect back to home page.
     res.redirect("/");
   })
