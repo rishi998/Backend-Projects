@@ -4,14 +4,19 @@ const path=require('path');
 const usermodel=require('./models/user');
 
 // the default stuff for ejs files
+// middlewares
 app.set("view engine","ejs");
 app.use(express.json());
 app.use(express.urlencoded({entended:true}));
 app.use(express.static(path.join(__dirname,'public')));
 
-// the home router
+// the home route
 app.get("/",(req,res)=>{
   res.render("index");
+})
+app.get('/read',async (req,res)=>{
+  let users=await usermodel.find();
+  res.render("read",{users});
 })
 
 app.post('/create',async (req,res)=>{
@@ -22,11 +27,6 @@ app.post('/create',async (req,res)=>{
     image
   })
   res.redirect("/read");
-})
-
-app.get('/read',async (req,res)=>{
-  let users=await usermodel.find();
-  res.render("read",{users});
 })
 
 app.get('/edit/:userid',async(req,res)=>{
@@ -40,8 +40,8 @@ app.post('/update/:userid',async(req,res)=>{
   res.redirect("/read");
 })
 
-app.get('/delete/:id',async (req,res)=>{
-  let users=await usermodel.findOneAndDelete({_id:req.params.id})
+app.get('/delete/:userid',async (req,res)=>{
+  let users=await usermodel.findOneAndDelete({_id:req.params.userid})
   res.redirect("/read");
 })
 
