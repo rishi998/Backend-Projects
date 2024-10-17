@@ -1,0 +1,5 @@
+basic app jisme users posts likh payenge.
+1. Login, logout and register 
+2. post creation 
+post like 
+post deletion 
