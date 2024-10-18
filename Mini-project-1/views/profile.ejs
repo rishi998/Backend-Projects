@@ -28,6 +28,7 @@
             <div class="btns flex gap-4 mt-1">
               <a href="/like/<%=post._id%>" class="text-blue-500"><%=post.likes.indexOf(user._id)===-1?"Like":"Unlike"%></a>
               <a href="/edit/<%=post._id%>" class="text-blue-500">Edit</a>
+              <a href="/delete/<%=post._id%>" class="text-blue-500">Delete</a>
             </div>
           </div>
         <%})%>

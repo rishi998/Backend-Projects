@@ -41,6 +41,10 @@ app.get("/edit/:id",isloggedin,async function(req,res){
   let post=await postmodel.findOne({_id:req.params.id}).populate("user");
   res.render("edit",{post});
 })
+app.get("/delete/:id",isloggedin,async function(req,res){
+  await postmodel.findOneAndDelete({_id:req.params.id});
+  res.redirect("/profile");
+})
 app.post("/update/:id",isloggedin,async function(req,res){
   let post=await postmodel.findOneAndUpdate({_id:req.params.id},{content:req.body.content});
   res.redirect("/profile");
@@ -92,7 +96,7 @@ app.post("/register",async (req,res)=>{
       
       let token = jwt.sign({email:email,userid:user._id},"shhhh");
       res.cookie("token",token);
-      res.send("Registered");
+      res.redirect("/profile")
     })
   })
 })
@@ -110,5 +114,6 @@ function isloggedin(req,res,next){
     next();
   }
 }
+
 
 app.listen(3000);
