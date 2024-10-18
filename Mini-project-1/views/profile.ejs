@@ -19,7 +19,7 @@
     </form>
     <div class="posts mt-20">
       <h3 class="text-zinc-400">Your Posts</h3>
-      <div class="post-container mt-5 flex">
+      <div class="post-container mt-5 flex flex-wrap">
         <% user.posts.reverse().forEach(function(post){%>
           <div class="post w-2/5 border-2 border bg-zinc-800 rounded-md border-none px-3 py-1 mr-4 mb-4">
             <h4 class="mb-3 text-blue-500">@<%=user.username%></h4>
