@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const bcrypt=require('bcrypt');
 const jwt=require("jsonwebtoken");
 const user = require('./models/user');
+const post = require('./models/post');
 
 app.set("view engine","ejs");
 app.use(express.json());
@@ -21,10 +22,28 @@ app.get("/login",function(req,res){
 })
 
 app.get("/profile",isloggedin,async function(req,res){
-  // getting the details of the currently logged in user
   let user=await usermodel.findOne({email:req.user.email}).populate("posts");
-  // sending the data of the user to the profile page for further use.
   res.render("profile",{user});
+})
+app.get("/like/:id",isloggedin,async function(req,res){
+  let post=await postmodel.findOne({_id:req.params.id}).populate("user");
+  if(post.likes.indexOf(req.user.userid)===-1){
+    post.likes.push(req.user.userid);
+  }
+  else{
+    post.likes.splice(post.likes.indexOf(req.user.userid),1);
+  }
+  await post.save();
+  res.redirect("/profile");
+})
+
+app.get("/edit/:id",isloggedin,async function(req,res){
+  let post=await postmodel.findOne({_id:req.params.id}).populate("user");
+  res.render("edit",{post});
+})
+app.post("/update/:id",isloggedin,async function(req,res){
+  let post=await postmodel.findOneAndUpdate({_id:req.params.id},{content:req.body.content});
+  res.redirect("/profile");
 })
 
 app.post("/post",isloggedin,async function(req,res){
