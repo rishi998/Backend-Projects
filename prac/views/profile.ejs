@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white">
+  <div class="text-white m-1">
+    <h2>Hi rishi</h2>
+    <h5>You can create a post here</h5>
+    <textarea class="w-1/2 h-1/2 rounded-md mt-2 resize-none px-3 py-2 bg-transparent border-2 border-red-500 block" name="textarea" id="" placeholder="What's on your mind?"></textarea>
+    <a href="/post" class="px-3 py-2 bg-blue-500 mt-5 inline-block rounded-xl">Create</a>
+  </div>
+  <div>
+    <h3 class="text-3xl mt-20">Your Posts</h3>
+    <div class="posts border-2 w-1/2 h-[75%] rounded-md mt-10 px-3 py-2 bg-transparent border-green-400">
+      <div class="postcontainer text-white">
+        <h3 class="username text-green-400 text-semibold text-sm">@username</h3>
+        <p class="content text-xl py-2">This is a beautiful day.</p>
+        <div class="flex space-x-6 ">
+          <a href="/like/<%=user._id%>">Like</a>
+          <a href="/edit/id">Edit</a>
+          <a href="/delete">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
